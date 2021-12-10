@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script src="js/utils.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body scroll="no" style="overflow-x:hidden">
+<div class="layui-row" style="width:101.5%;height: 50px ;background: #df4338">
+    <div class="layui-col-xs2 ">
+        <button onclick="goBack()" class="layui-col-md1 layui-icon layui-icon-left" style="color: white; border-right:2px solid #ffffff;; height:50px ;background: #df4338;font-size:xxx-large"></button>
+    </div>
+    <div class="layui-col-xs10" style="text-align: center;font-size: 30px;color: #333333" >
+        视频
+    </div>
+
+</div>
+<iframe id="if" scrolling='no' allowfullscreen='true'  width="100%"></iframe>
+
+
+</body>
+<script>
+    var tp='https://api.theporn.xyz';
+
+
+    $.get(tp+"/v1/video/info/"+getQueryString("id"),function(result){
+       document.getElementById("if").src=result.data.avdata.embed_iframe_url
+    });
+</script>
+</html>
