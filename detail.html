@@ -8,10 +8,15 @@
     <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
     <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
     <script src="js/utils.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video-js.min.css" rel="stylesheet">
+    <script id="js0" lang="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.3.0/video.min.js"></script>
+    <script id="js1" lang="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 </head>
 <body scroll="no" style="overflow-x:hidden">
+<style>
+    .video-js .vjs-tech {position: relative !important;}
+</style>
 <div class="layui-row" style="width:101.5%;height: 50px ;background: #df4338">
     <div class="layui-col-xs2 ">
         <button onclick="goBack()" class="layui-col-md1 layui-icon layui-icon-left" style="color: white; border-right:2px solid #ffffff;; height:50px ;background: #df4338;font-size:xxx-large"></button>
@@ -21,16 +26,29 @@
     </div>
 
 </div>
-<iframe id="if" scrolling='no' allowfullscreen='true'  width="100%"></iframe>
-
+<div id="view"></div>
 
 </body>
+<script id="demo" type="text/html">
+
+    <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" data-setup='{}' style='width: 100%;'>
+            <source id="source" src="{{d.src}}" type="application/x-mpegURL"></source>
+    </video>
+
+
+</script>
 <script>
-    var tp='https://api.theporn.xyz';
-
-
-    $.get(tp+"/v1/video/info/"+getQueryString("id"),function(result){
-       document.getElementById("if").src=result.data.avdata.embed_iframe_url
+    var url='https://api.theporn.xyz';
+    $.get(url+"/app/video/play?referrer_host=theporn.cc&tid="+getQueryString("id")+"&from_lang=chinese",function(result){
+        // tp.src=
+        var d={src:url+result.data.video.m3u8_url};
+        var getTpl = document.getElementById("demo").innerHTML,view = document.getElementById('view');
+        layui.laytpl(getTpl).render(d, function(html){
+            view.innerHTML = html;
+        });
+        document.getElementById("js0").src=document.getElementById("js0").lang;
+        document.getElementById("js1").src=document.getElementById("js1").lang;
     });
 </script>
+
 </html>
